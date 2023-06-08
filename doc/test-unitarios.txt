@@ -1,0 +1,10 @@
+Editar test/fixtures/xxxx.yml
+con datos de prueba
+
+En caso de foreign keys, editar y agregar en config/environments/test.rb (dudosa utilidad)
+  # Disable the need to have a record on the other end of an association
+    config.active_record.belongs_to_required_by_default = false
+  Editar config/application.rb y agregar:
+    config.active_record.verify_foreign_keys_for_fixtures = false
+
+

@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('Roboto_Mono/RobotoMono-VariableFont_wght.ttf') format('truetype');
+ }
+ @font-face {
+    font-family: 'ArchitectsDaughter';
+    src: url('Architect_Daughter/ArchitectsDaughter-Regular.ttf') format('truetype');
+ }
+ @font-face {
+    font-family: 'Caveat';
+    src: url('Caveat/Caveat-VariableFont_wght.ttf') format('truetype');
+ }
+ @font-face {
+    font-family: 'Merienda';
+    src: url('Merienda/Merienda-VariableFont_wght.ttf') format('truetype');
+ }
+
+.signUpInvitation{
+    font-family: 'ArchitectsDaughter', 'sans-serif';
+    flex: 1 1 auto;
+    font-size: max(1.5vw, 10px);
+    max-width: max(300px, 30%);
+    color: inherit;
+    text-decoration: none;
+}
+.box{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border: 1px solid #e3f2fd;
+}

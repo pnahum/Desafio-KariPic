@@ -1,0 +1,43 @@
+Ver documentos de curso:
+G3-M6_Presentación - ActionStorage y formularios
+G3-M6_Presentación - Bucket Amazon S3
+G3-M6_Presentación - ActionStorage y Amazon S3
+G3-M6_01_d_Desafío_evaluado_-_Utilizar_Amazon_S3_en_proyecto_en_Rails
+###ActiveStorage tambien puede funcionar en modo local. Seguir lo indicado en
+###G3-M6_Presentación - ActionStorage y formularios. No hacer los cambios para S3 o amazon
+agregar o verificar en Gemfile
+	'gem aws-sdk-s3'
+	'gem activestorage'
+hacer bundle
+
+activar active_storage en rails. Crea tablas en la base de datos, donde se insetan los objetos a almacenar
+	rails active_storage:install
+editar o verificar los archivos de modelos app/model/xyz.rb (modelos que contengan objetos a almacenar)
+	has_many_attached :images	# o (dependiendo de multiples adjuntos o solo uno)
+	has_one_attached :image 
+editar archivos config/environments/development.rb cambiando :local por :amazon
+	   config.active_storage.service = :amazon
+
+editar config/application.yml agregando las credenciales para acceso a S3 y bucket:
+	user_iam: pedro
+	pass_iam: Peyo2023!
+	aws_access_key: AKIAWSYTV5YCUDRA35HK
+	aws_secret_access_key: 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
+	aws_bucket: pruebapina
+	aws_region: us-east-1
+
+editar archivo config/storage.yml para agregar servicio amazon S3:
+	amazon:
+	  service: S3
+	  access_key_id: <%= ENV["aws_access_key"] %>
+	  secret_access_key: <%= ENV["aws_secret_access_key"] %>
+	  region: <%= ENV["aws_region"] %>
+	  bucket: <%= ENV["aws_bucket"] %>
+
+En app/views/*.html.erb utilizar :image en caso de subir imagenes al bucket(nada muy diferente):
+	<div class="form-group">
+	 <%= form.label :image %>
+	 <%= form.file_field :image, multiple: false, class: 'form-control' %>
+	</div>
+
+

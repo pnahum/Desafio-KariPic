@@ -1,0 +1,26 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Photos</h1>
+
+<div id="photos">
+  <% @photos.each do |photo| %>
+   <div class="container row">
+    <div class="col-sm-6">
+      <%= render photo %>
+      <p><%= link_to "Show this photo", photo %></p>
+    </div>
+<%#  ### Columna de Comentarios ###  %>
+    <div class="col-sm-6" style= "max-height:250px">
+      <p><strong>Comentarios:</strong></p>
+      <div class="form-floating postComments">
+        <% photo.comments.each do |comment| %>
+          <%= image_tag(comment.user.photo, height: "20px") %>
+          <span style= "font-size: 1.2vw"><%#= comment.user.name %></span> - <span style= "font-size: 1.5vw"><%= comment.post %></span><br>
+        <% end %>
+      </div>
+    </div>
+   </div>
+  <% end %>
+</div>
+
+<%= link_to "New photo", new_photo_path %>

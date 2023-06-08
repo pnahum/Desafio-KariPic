@@ -1,0 +1,18 @@
+Gema para securizar los datos sensobles (passwords,etc)
+
+Agregar 
+	gem 'figaro'
+hacer
+	bundle exec figaro install  , crea config/application.yml y edita .gitignore
+
+Editar config/application.yml
+vtr_email: pedro.nahum@vr.net
+vtr_password: Pnhmvtr2016
+database_user: vagrant
+database_passwd: vagrant
+user_iam: pedro
+pass_iam: Peyo2023!
+aws_access_key: AKIAWSYTV5YCUDRA35HK
+aws_secret_access_key: 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
+aws_bucket: pruebapina
+aws_region: us-east-1

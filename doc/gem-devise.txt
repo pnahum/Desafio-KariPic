@@ -1,0 +1,57 @@
+Agregar o revisar en Gemfile
+gem 'devise'
+hacer bundle
+rails g devise:install # No hacerlo. Solo los pasos siguentes. Solo si no se ha realizado antes
+rails g devise:controllers users
+rails g devise:views
+rails g devise User	Revisar si existe db/migrate asociado a tabla users. No hacerlo si se hace la secuencia anterior completa
+rails db:migrate
+En caso de agregar atributos a users, se deben agregar a strong parameters en 
+app/controllers/application_controller.rb, luego agregar estos parametros en las
+vistas de registro.
+rails g migration AddDetailsToUsers name photo
+before_action :configure_permitted_parameters, if: :devise_controller?
+
+        protected
+        def configure_permitted_parameters
+                devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :age, :phone])
+                devise_parameter_sanitizer.permit(:account_update, keys: [:name, :age, :phone])
+        end
+        def after_sign_in_path_for(resource)
+                root_path
+        end
+
+        def authorize_request(kind = nil)
+                unless kind.include?(current_user.role)
+                        redirect_to posts_path, notice: "You are not authorized to perform this action"
+                end
+        end
+Se debe descomentar en config/initializers/devise.rb
+config.navigational_formats = ['*/*', :html, :turbo_stream]
+
+En app/models/user.rb agregar traduccion de roles:
+	enum :role, [:normal_user, :author, :admin]
+
+En los controladores especificos se agregan las politicas de autenticacion, por ejemplo
+  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action only: [:new, :create] do
+        authorize_request(["author", "admin"])
+
+En las vistas agregar los eleentos adicionales:
+ <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autocomplete: "name", class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, autocomplete: "description", :cols => 80, :rows => 5
+%>
+  </div>
+
+  <div class="field">
+    <%= f.label :image %>
+    <%= f.file_field :image, multiple: false, class: 'form-control' %>
+  </div>
+

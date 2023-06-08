@@ -1,0 +1,33 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="container row">
+  <div class="col-sm-6">
+    <%= render @photo %>
+  </div>
+
+          <%#  ###Ingreso de Comentarios a las Fotos###  %>
+  <div class="col-sm-6" style= "max-height:250px">
+    <%#= form_with(model: @photo, url: photo_path, method: :get) do |form| %>
+    <%#= form_with model: @photo, method: :post do |photo_form| %>
+      <%#= photo_form.hidden_field :id, value: @photo.id %>
+      <div>
+      <%= form_with model: @comment, url: photo_path, method: :post  do |comment_form| %>
+        <%= comment_form.text_area :post, :cols => 50, :rows => 3 %>
+      <%# end %>
+        <%#= form.label "Ingresa tu Comentario", style: "display: block" %>
+        <%#= form.text_area @comentario, :cols => 50, :rows => 3 %>
+      </div>
+      <div>
+        <%= comment_form.submit "Enviar" %>
+      </div>
+      <% end %>
+    <%# end %>
+  </div>
+          <%#   #######################################  %>
+</div>
+<div>
+  <%= link_to "Edit this photo", edit_photo_path(@photo) %> |
+  <%= link_to "Back to photos", photos_path %>
+
+  <%= button_to "Destroy this photo", @photo, method: :delete %>
+</div>

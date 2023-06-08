@@ -1,0 +1,45 @@
+<% content_for :head do %>
+     <%= stylesheet_link_tag 'navheader' %> 
+<% end %>
+<nav class="navbar navbar-expand-sm bg-light">
+	<div class="container-fluid">
+	    <div class="signUpInvitation">
+		<% if user_signed_in? %>
+			<% if current_user.photo %>
+				<%= image_tag(current_user.photo, width: "50px") %>
+			<% end %>
+			<% if current_user.name %>
+				Hola <%= current_user.name %><%= button_to '- cerrar sesion', destroy_user_session_path, method: :delete, form: {style: 'display:inline-block;'}, style: 'color: blue;', class:'btn' %>
+			<% else %>
+				Hola <%= current_user.email %>
+			<% end %>
+		<% else %>
+			<%= 'Si quieres formar parte de este selecto grupo debes '%><%= link_to 'registrarte', new_user_registration_path, style: 'text-decoration: none' %><%=' o '%><%= link_to 'conectarte', new_user_session_path, style: 'text-decoration: none' %>
+		<% end %>
+	    </div>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-right: 80px">
+			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Menu</a>
+					<ul class="dropdown-menu">
+                                                <li><%= link_to 'Start', root_path, class: 'dropdown-item'%></li>
+                                                <% if user_signed_in? %>
+                                                        <li><%= link_to 'Start', root_path, class: 'dropdown-item'%></li>
+                                                        <li><%= link_to 'Edit', edit_user_registration_path, class: 'dropdown-item'%></li>
+                                                        <li><%= button_to 'Close', destroy_user_session_path, class: 'dropdown-item', method: :delete %></li>
+                                                <% else %>
+                                                        <li><%= link_to 'Sign Up', new_user_registration_path, class: 'dropdown-item'%></li>
+                                                        <li><%= link_to 'Log In', new_user_session_path, class: 'dropdown-item'%></li>
+                                                <% end %>
+
+					</ul>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+</nav>

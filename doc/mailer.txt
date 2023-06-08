@@ -1,0 +1,57 @@
+rails generate mailer User   para inicializar el sistema de correo
+#####
+Para enviar correo simplificado desde consola, cambiando lo que corresponda:
+ActionMailer::Base.delivery_method = :smtp 
+ActionMailer::Base.smtp_settings = {
+  address: 'smtp.gmail.com', 
+  port: 587, 
+  domain: 'gmail.com',
+  authentication: 'plain', 
+  enable_starttls_auto: true, 
+  user_name: 'your@gmail.com',
+  password: 'yourpassword'
+}
+
+ActionMailer::Base.mail(
+  from: "test@example.co",
+  to: "valid.recipient@domain.example",
+  subject: "Test",
+  body: "Test"
+).deliver_now
+#####
+
+Editar app/mailers/application_mailer.rb
+class ApplicationMailer < ActionMailer::Base
+  default from: "from@ofertaslaborales.com"
+  layout "mailer"
+end
+
+Editar app/mailers/user_mailer.rb agragando un metodo para el correo a enviar
+class UserMailer < ApplicationMailer
+def notification_email
+#    @user = params[:user]
+#    @url  = 'http://www.vtr.net/login'
+#    mail(to: @user.email, subject: 'Aviso de nueva postulacion')
+    mail(to: 'pedro.nahum@vtr.net', subject: 'Aviso de nueva postulacion')
+  end
+end
+
+Editar las configuraciones de usuario, password y otros de la cuenta de envio, en config/environments/development.rb
+ config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.vtr.net',
+    port:                 587,
+    domain:               'vtr.net',
+    user_name:            ENV["vtr_email"],
+    password:             ENV["vtr_password"],
+    authentication:       'plain',
+    enable_starttls_auto: true,
+    open_timeout:         5,
+    read_timeout:         5 }
+
+Se puede crear una plantilla del correo editando los archivos en app/views/user_mailer
+Ver ejemplos en OfertasLaborales
+
+Luego en el controlador donde se quiera utilizar, insertar:
+UserMailer.with(user: @user.email).notification_email.deliver_now
+ o  UserMailer.notification_email.deliver_now!

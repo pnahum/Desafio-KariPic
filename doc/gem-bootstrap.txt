@@ -1,0 +1,34 @@
+agregar o verificar en Gemfile:
+	gem 'bootstrap'
+	gem 'jquery-rails'
+	gem 'popper-js', '~>2.11'
+activar gema 'sass" (descomentar)
+asegurar  que gema sprockets-rails sea al menos v2.3.2 (ver sitio de gema de bootstrap https://github.com/twbs/bootstrap-rubygem)
+hacer bundle
+
+verificar o cambiar app/assets/stylesheet/application.css a /app/assets/stylesheet/application.scss
+
+agregar en app/assets/stylesheet/application.scss
+	@import "bootstrap"
+
+agregar o verificar que contenga en app/javascript/application.js
+	import "@hotwired/turbo-rails"
+	import "controllers"
+	import "popper"
+        import "bootstrap"
+	//= require jquery3
+	//= require popper
+	//= require bootstrap
+
+verificar o agregar en config/initializers/asssets.rb
+	Rails.application.config.assets.precompile += %w(application.scss bootstrap.min.js popper.js)
+
+verificar o agregar en config/importmap.rb
+	pin "application", preload: true
+	pin "@hotwired/turbo-rails", to: "turbo.min.js", preload: true
+	pin "@hotwired/stimulus", to: "stimulus.min.js", preload: true
+	pin "@hotwired/stimulus-loading", to: "stimulus-loading.js", preload: true
+	pin_all_from "app/javascript/controllers", under: "controllers"
+	pin "bootstrap", to: "bootstrap.min.js", preload: true
+	pin "@popperjs/core", to: "popper.js", preload: true
+	pin "popper", to: 'popper.js', preload: true

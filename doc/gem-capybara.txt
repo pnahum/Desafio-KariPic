@@ -1,0 +1,2 @@
+Prueba de aplicaciones. TestRails, TestLink
+Viene instalada por defecto
